@@ -1,5 +1,5 @@
 # for zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+fpath+=(~/.local/share/zsh/site-functions /usr/local/share/zsh-completions)
 autoload -Uz add-zsh-hook
 
 # Environment variables
@@ -17,7 +17,29 @@ path=(
 )
 
 # Keybind : emacs
-bindkey -e
+# if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+#     function zle-line-init() {
+# 	echoti smkx
+#     }
+#     function zle-line-finsh() {
+# 	echoti rmkx
+#     }
+#     zle -N zle-line-init
+#     zle -N zle-line-finsh
+# fi
+
+autoload -Uz smart-insert-last-word && zle -N smart-insert-last-word
+autoload -Uz fzf-cd-widget && zle -N fzf-cd-widget
+autoload -Uz fzf-file-widget && zle -N fzf-file-widget
+autoload -Uz fzf-history-widget && zle -N fzf-history-widget
+
+bindkey -e \
+	"^O" fzf-cd-widget\
+	"^X^F" fzf-file-widget\
+	"^X^R" fzf-history-widget\
+		
+
+
 
 # auto-complete
 autoload -U compinit; compinit
