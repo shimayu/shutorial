@@ -1,10 +1,10 @@
-# for zsh-completions
+# for zsh-completions　and functions
 fpath+=(~/.local/share/zsh/site-functions /usr/local/share/zsh-completions)
 autoload -Uz add-zsh-hook
 
 # Environment variables
 export CLICOLOR=1
-export GEM_HOME="$(/usr/bin/ruby -e 'print Gem.user_dir')"
+export GEM_HOME="$(/usr/local/bin/ruby -e 'print Gem.user_dir')"
 export GPG_TTY="$(tty)"
 
 # Path
@@ -33,16 +33,16 @@ autoload -Uz fzf-cd-widget && zle -N fzf-cd-widget
 autoload -Uz fzf-file-widget && zle -N fzf-file-widget
 autoload -Uz fzf-history-widget && zle -N fzf-history-widget
 
+# auto-complete
+autoload -U compinit; compinit
+
+bindkey -e
 bindkey -e \
 	"^O" fzf-cd-widget\
 	"^X^F" fzf-file-widget\
 	"^X^R" fzf-history-widget\
-		
-
-
-
-# auto-complete
-autoload -U compinit; compinit
+	"^P" history-beginning-search-backward\
+	"^N" history-beginning-search-forward
 
 # Prompt
 autoload -Uz vcs_info
